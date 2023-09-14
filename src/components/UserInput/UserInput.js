@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import classes from "./UserInput.module.css";
 
 const initialUserInput = {
   "current-savings": 10000,
@@ -14,20 +15,19 @@ function UserInput(props) {
     props.onCalculate(userInput);
   };
   const resetHandler = () => {
-    console.log("RESET");
     setUserInput(initialUserInput);
   };
 
   const inputChangeHandler = (input, value) => {
     console.log(input, value);
     setUserInput((prevInput) => {
-      return { ...prevInput, [input]: value };
+      return { ...prevInput, [input]: +value }; // + converts thestring value to a number
     });
   };
   return (
     <div>
-      <form onSubmit={submitHandler} className="form">
-        <div className="input-group">
+      <form onSubmit={submitHandler} className={classes.form}>
+        <div className={classes["input-group"]}>
           <p>
             <label htmlFor="current-savings">Current Savings ($)</label>
             <input
@@ -51,7 +51,7 @@ function UserInput(props) {
             />
           </p>
         </div>
-        <div className="input-group">
+        <div className={classes["input-group"]}>
           <p>
             <label htmlFor="expected-return">
               Expected Interest (%, per year)
@@ -77,11 +77,15 @@ function UserInput(props) {
             />
           </p>
         </div>
-        <p className="actions">
-          <button type="reset" onClick={resetHandler} className="buttonAlt">
+        <p className={classes.actions}>
+          <button
+            type="reset"
+            onClick={resetHandler}
+            className={classes.buttonAlt}
+          >
             Reset
           </button>
-          <button type="submit" className="button">
+          <button type="submit" className={classes.button}>
             Calculate
           </button>
         </p>
